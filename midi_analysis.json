@@ -1,138 +1,36 @@
 {
-    "file": "Have_a_Nice_Day.mid",
-    "num_instruments": 22,
+    "file": "dataset/All_Mixed_Up.mid",
+    "num_instruments": 5,
     "instruments": [
         {
-            "program": 32,
-            "name": "Acoustic Bass",
-            "is_drum": true,
-            "num_notes": 838
+            "program": 27,
+            "name": "Electric Guitar (clean)",
+            "is_drum": false,
+            "num_notes": 360
         },
         {
-            "program": 40,
-            "name": "Violin",
-            "is_drum": true,
-            "num_notes": 333
+            "program": 26,
+            "name": "Electric Guitar (jazz)",
+            "is_drum": false,
+            "num_notes": 684
         },
         {
-            "program": 32,
-            "name": "Acoustic Bass",
+            "program": 34,
+            "name": "Electric Bass (pick)",
+            "is_drum": false,
+            "num_notes": 560
+        },
+        {
+            "program": 66,
+            "name": "Tenor Sax",
             "is_drum": false,
             "num_notes": 499
         },
         {
-            "program": 0,
-            "name": "Acoustic Grand Piano",
-            "is_drum": false,
-            "num_notes": 857
-        },
-        {
-            "program": 65,
-            "name": "Alto Sax",
-            "is_drum": false,
-            "num_notes": 209
-        },
-        {
-            "program": 65,
-            "name": "Alto Sax",
-            "is_drum": false,
-            "num_notes": 85
-        },
-        {
-            "program": 73,
-            "name": "Flute",
-            "is_drum": false,
-            "num_notes": 12
-        },
-        {
-            "program": 66,
-            "name": "Tenor Sax",
-            "is_drum": false,
-            "num_notes": 203
-        },
-        {
-            "program": 66,
-            "name": "Tenor Sax",
-            "is_drum": false,
-            "num_notes": 80
-        },
-        {
-            "program": 67,
-            "name": "Baritone Sax",
-            "is_drum": false,
-            "num_notes": 112
-        },
-        {
-            "program": 56,
-            "name": "Trumpet",
-            "is_drum": false,
-            "num_notes": 159
-        },
-        {
-            "program": 59,
-            "name": "Muted Trumpet",
-            "is_drum": false,
-            "num_notes": 1
-        },
-        {
-            "program": 56,
-            "name": "Trumpet",
-            "is_drum": false,
-            "num_notes": 179
-        },
-        {
-            "program": 59,
-            "name": "Muted Trumpet",
-            "is_drum": false,
-            "num_notes": 1
-        },
-        {
-            "program": 56,
-            "name": "Trumpet",
-            "is_drum": false,
-            "num_notes": 152
-        },
-        {
-            "program": 59,
-            "name": "Muted Trumpet",
-            "is_drum": false,
-            "num_notes": 1
-        },
-        {
-            "program": 56,
-            "name": "Trumpet",
-            "is_drum": false,
-            "num_notes": 171
-        },
-        {
-            "program": 59,
-            "name": "Muted Trumpet",
-            "is_drum": false,
-            "num_notes": 1
-        },
-        {
-            "program": 57,
-            "name": "Trombone",
-            "is_drum": false,
-            "num_notes": 202
-        },
-        {
-            "program": 57,
-            "name": "Trombone",
-            "is_drum": false,
-            "num_notes": 187
-        },
-        {
-            "program": 57,
-            "name": "Trombone",
-            "is_drum": false,
-            "num_notes": 176
-        },
-        {
-            "program": 57,
-            "name": "Trombone",
-            "is_drum": false,
-            "num_notes": 195
+            "program": 71,
+            "name": "Clarinet",
+            "is_drum": true,
+            "num_notes": 956
         }
     ]
 }

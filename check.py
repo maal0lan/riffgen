@@ -1,7 +1,7 @@
 import pretty_midi
 from pretty_midi import instrument_name_to_program
 
-midi = pretty_midi.PrettyMIDI("Guitar.mid")
+midi = pretty_midi.PrettyMIDI("filtered/All_Mixed_Up.mid")
 for inst in midi.instruments:
     print(inst.program, pretty_midi.program_to_instrument_name(inst.program), inst.is_drum)
 filtered_instruments = []

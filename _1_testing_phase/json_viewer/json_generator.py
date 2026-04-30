@@ -22,7 +22,7 @@ def analyze_midi(file_path):
         "instruments": instruments
     }
 
-data = analyze_midi("dataset/All_Mixed_Up.mid")
+data = analyze_midi("filtered/Andra_tutto_bene_58_.mid")
 
 with open("midi_analysis.json", "w") as f:
     json.dump(data, f, indent=4)

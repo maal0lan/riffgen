@@ -1,6 +1,7 @@
 def get_tempo(midi):
     tempo = midi.get_tempo_changes()[1]
     return tempo[0] if len(tempo) > 0 else 120
+
 def tempo_to_token(bpm):
     if bpm < 60:
         return "TEMPO_VERY_SLOW"
@@ -12,6 +13,7 @@ def tempo_to_token(bpm):
         return "TEMPO_FAST"
     else:
         return "TEMPO_VERY_FAST"
+    
 def midi_to_tokens(midi):
     tokens = []
     

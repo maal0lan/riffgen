@@ -1,0 +1,12 @@
+{
+    "file": "filtered/Andra_tutto_bene_58_.mid",
+    "num_instruments": 1,
+    "instruments": [
+        {
+            "program": 26,
+            "name": "Electric Guitar (jazz)",
+            "is_drum": false,
+            "num_notes": 235
+        }
+    ]
+}

@@ -1,17 +1,16 @@
 import pretty_midi
 import os
+from collections import defaultdict
 
 
 def get_tempo(midi):
-    """Extract tempo (BPM) from MIDI file."""
     tempo_changes = midi.get_tempo_changes()
     if len(tempo_changes[1]) > 0:
         return tempo_changes[1][0]
-    return 120.0  # Default BPM
+    return 120.0
 
 
 def tempo_to_token(bpm):
-    """Categorize tempo into buckets."""
     if bpm < 60:
         return "TEMPO_VERY_SLOW"
     elif bpm < 90:
@@ -24,65 +23,99 @@ def tempo_to_token(bpm):
         return "TEMPO_VERY_FAST"
 
 
+def velocity_to_token(v):
+    if v < 60:
+        return "VEL_LOW"
+    elif v < 100:
+        return "VEL_MID"
+    else:
+        return "VEL_HIGH"
+
+
 def midi_to_tokens(midi_path):
-    """Convert MIDI file to token sequence."""
     midi = pretty_midi.PrettyMIDI(midi_path)
-    
-    # Get tempo
-    bpm = get_tempo(midi)
-    tempo_token = tempo_to_token(bpm)
-    
+
     tokens = []
-    tokens.append(f"TEMPO:{tempo_token}:{bpm}")
-    
-    # Collect all notes from all instruments
+
+    # ✅ tempo
+    bpm = get_tempo(midi)
+    tokens.append(tempo_to_token(bpm))
+
+    # ✅ collect notes with instrument tag
     all_notes = []
+
     for inst in midi.instruments:
-        if not inst.is_drum:
-            for note in inst.notes:
-                all_notes.append(note)
-    
-    # Sort by start time
-    all_notes.sort(key=lambda x: x.start)
-    
-    # Convert to tokens
+        if inst.is_drum:
+            continue
+
+        inst_type = "GUITAR" if inst.program < 40 else "MELODY"
+
+        for note in inst.notes:
+            all_notes.append((note, inst_type))
+
+    # ✅ sort
+    all_notes.sort(key=lambda x: x[0].start)
+
+    # ✅ group by time (for chords)
+    grouped = defaultdict(list)
+    for note, inst_type in all_notes:
+        t = round(note.start, 3)
+        grouped[t].append((note, inst_type))
+
     prev_time = 0
-    for note in all_notes:
-        # Time delta (in beats, assuming 4/4 time)
-        delta = note.start - prev_time
-        tokens.append(f"TIME:{delta:.3f}")
-        
-        # Note: pitch, duration, velocity
-        tokens.append(f"NOTE:{note.pitch}:{note.duration:.3f}:{note.velocity}")
-        
-        prev_time = note.start
-    
+
+    # ✅ build tokens
+    for t in sorted(grouped.keys()):
+        delta = t - prev_time
+
+        # ⏱ discretize time
+        if delta > 0:
+            time_bin = int(delta * 10)
+            tokens.append(f"TIME_{time_bin}")
+
+        tokens.append("CHORD_START")
+
+        for note, inst_type in grouped[t]:
+            pitch = note.pitch
+
+            duration = note.end - note.start
+            dur_bin = int(duration * 10)
+
+            vel_token = velocity_to_token(note.velocity)
+
+            tokens.append(f"INST_{inst_type}")
+            tokens.append(f"NOTE_{pitch}")
+            tokens.append(f"DUR_{dur_bin}")
+            tokens.append(vel_token)
+
+        tokens.append("CHORD_END")
+
+        prev_time = t
+
     return tokens
 
 
 def process_folder(input_dir, output_file):
-    """Process all MIDI files in a folder."""
     all_tokens = []
-    
+
     for file in os.listdir(input_dir):
         if file.endswith(".mid"):
             path = os.path.join(input_dir, file)
             print(f"Processing: {file}")
-            
+
             try:
                 tokens = midi_to_tokens(path)
-                all_tokens.append(f"FILE:{file}")
+                all_tokens.append(f"FILE_{file}")
                 all_tokens.extend(tokens)
-                all_tokens.append("")  # Blank line between files
+                all_tokens.append("")
             except Exception as e:
                 print(f"Error processing {file}: {e}")
-    
-    # Write to output
+
     with open(output_file, "w") as f:
         f.write("\n".join(all_tokens))
-    
-    print(f"\nTokenized {len(all_tokens)} tokens to {output_file}")
+
+    print(f"\nSaved to {output_file}")
 
 
 if __name__ == "__main__":
-    process_folder("filtered", "tokens.txt")
+    process_folder("filtered", "output_tokenizer/tokens_clean.txt")

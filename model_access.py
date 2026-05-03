@@ -23,8 +23,8 @@ class TinyModel(nn.Module):
 # ============================================
 # LOAD MODEL & VOCAB
 # ============================================
-def load_model_and_vocab(model_path="model/trained_model/riffgen_0.1.pth", 
-                         vocab_path="model/vocab.json"):
+#def load_model_and_vocab(model_path="model/trained_model/song_gen_model.pth", vocab_path="model/vocab_all.json"):
+def load_model_and_vocab(model_path="model/trained_model/riffgen_0.1.pth", vocab_path="model/vocab.json"):
     """Load trained model and vocabulary."""
     # Load vocab
     with open(vocab_path, "r") as f:
@@ -104,7 +104,8 @@ def generate(model, token_to_id, id_to_token, device, seed_tokens, num_tokens=10
     return generated
 
 
-def save_output(generated_tokens, output_path="generated_outputs/notes_1.txt"):
+def save_output(generated_tokens, output_path="generated_outputs/notes.txt"):
+#def save_output(generated_tokens, output_path="generated_outputs/notes_1.txt"):
     """Save generated tokens to a file."""
     with open(output_path, "w") as f:
         f.write("\n".join(generated_tokens))
@@ -120,13 +121,21 @@ if __name__ == "__main__":
     model, token_to_id, id_to_token, device = load_model_and_vocab()
     seq_len = 64  # Must match training
     
-    # Define seed
+ 
+    #seed = [
+     #   "TEMPO_HIGH",
+      #  "TIME:0.0",
+       # "NOTE:71:0.15:100"
+    #]
     seed = [
-        "TEMPO_MEDIUM",
-        "TIME:0.0",
-        "NOTE:60:0.25:80"
-    ]
-    
+    "TEMPO_HIGH",
+    "TIME:0.0",
+    "NOTE:40:0.20:120",
+    "TIME:0.20",
+    "NOTE:74:0.12:110",
+    "TIME:0.32",
+    "NOTE:77:0.12:115"
+]
     print(f"Seed: {seed}")
     print("Generating...")
     
@@ -137,3 +146,4 @@ if __name__ == "__main__":
     
     # Save to file
     save_output(generated, "generated_outputs/notes.txt")
+    #save_output(generated, "generated_outputs/notes_1.txt") # for all instrument it gave like hanszimmer ahh audio

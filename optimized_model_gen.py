@@ -22,7 +22,8 @@ class TinyModel(nn.Module):
 # =========================
 # LOAD DATA
 # =========================
-tokens = open("output_tokenizer/tokens_clean.txt").read().split()
+tokens = open("output_tokenizer/tokens_clean.txt").read().split() # uncomment for guitar only
+#tokens = open("output_tokenizer/all.txt").read().split() #uncomment for all instruments
 vocab = sorted(set(tokens))
 
 token_to_id = {t: i for i, t in enumerate(vocab)}
@@ -103,9 +104,9 @@ for epoch in range(10):
 # =========================
 # SAVE
 # =========================
-torch.save(model.state_dict(), "model/trained_model/optimized_model.pth")
-
-with open("model/vocab.json", "w") as f:
+torch.save(model.state_dict(), "model/trained_model/optimized_model.pth") #guitar model
+#torch.save(model.state_dict(), "model/trained_model/all_inst_model.pth") #all instrument model
+with open("model/vocab.json", "w") as f: # vocab is for guitar vocab_all is for all inst
     json.dump(token_to_id, f)
 
 # =========================

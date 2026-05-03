@@ -46,5 +46,5 @@ if __name__ == "__main__":
         tokens = [line.strip() for line in f if line.strip()]
     
     print(f"Loaded {len(tokens)} tokens")
-    tokens_to_midi(tokens, "generated_outputs/generated_riff.mid")
+    tokens_to_midi(tokens, "generated_outputs/generated_riff_01.mid")
     print("Done!")

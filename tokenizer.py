@@ -49,6 +49,7 @@ def midi_to_tokens(midi_path):
             continue
 
         inst_type = "GUITAR" if inst.program < 40 else "MELODY"
+        #inst_type = "ALL"  # Tokenize all instruments without grouping (for testing)
 
         for note in inst.notes:
             all_notes.append((note, inst_type))
@@ -119,3 +120,4 @@ def process_folder(input_dir, output_file):
 
 if __name__ == "__main__":
     process_folder("filtered", "output_tokenizer/tokens_clean.txt")
+    #process_folder("dataset", "output_tokenizer/all.txt")
